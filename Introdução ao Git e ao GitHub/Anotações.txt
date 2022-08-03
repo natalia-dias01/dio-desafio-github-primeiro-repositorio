@@ -1,0 +1,160 @@
+Como navegar pelas pastas
+O comando do Bash pwd é usado para exibir o "diretório de trabalho atual". O pwd é equivalente ao executar o cd em terminais DOS (host do console do Windows). Essa é a pasta ou o caminho no qual está a sessão de Bash atual.
+
+O comando do Bash ls é usado para listar o conteúdo do diretório de trabalho atual. O ls é equivalente ao DIR em terminais de host do console do Windows.
+
+O Bash e o host do console do Windows têm o comando cd. cd é acrônimo para "Change Directory". O cd é chamado junto com o nome do diretório. Executar o cd muda as sessões dos terminais atuais que trabalham no diretório para o argumento de diretório passado.
+
+Comandos do Git Bash
+O Git Bash é empacotado com comandos adicionais que podem ser encontrados no diretório /usr/bin da emulação. O Git Bash pode oferecer experiências robustas de shell no Windows. Ele é empacotado com os comandos de shell a seguir, que estão fora do escopo desse documento Ssh, scp, cat, find.
+
+Além do conjunto mencionado de comandos do Bash, o Git Bash inclui o conjunto completo dos principais comandos do Git discutidos nesse site. Saiba mais nas páginas de documentação correspondentes do git clone, git commit, git checkout, git push e muito mais.
+
+Como criar um repositório
+git init git clone git config
+Este tutorial fornece uma visão geral de como configurar um repositório (repo) sob o controle de versão do Git. Este recurso guiará você na inicialização de um repositório Git para um projeto novo ou existente. Incluídos abaixo estão exemplos tanto de fluxos de trabalho de repositórios criados localmente quanto clonados de repositórios remotos. Este guia pressupõe uma familiaridade básica com uma interface da linha de comandos.
+
+Os pontos de alto nível que este guia abordará são:
+
+Inicializando um novo repositório Git
+Clonando um repositório Git existente
+Fazer commit em uma versão modificada de um arquivo para o repositório
+Configurar um repositório Git para colaboração remota
+Comandos comuns do controle de versão do Git
+No final deste módulo, você deve ser capaz de criar um repositório Git, usar comandos comuns do Git, fazer commit de arquivo modificado, visualizar o histórico do seu projeto e configurar uma conexão a um serviço de hospedagem do Git (Bitbucket).
+
+O que é um repositório Git?
+Um repositório do Git é um armazenamento virtual para projetos. Ele permite que você salve versões do código, que você pode acessar quando precisar.
+
+Inicializando um novo repositório: git init
+Para criar um novo repositório, você vai usar o comando git init. git init é um comando único que você usa durante a configuração inicial de um novo repositório. A execução desse comando cria um novo subdiretório .git no diretório de trabalho atual. Essa ação também vai criar uma ramificação principal.
+
+Controlando a versão de um projeto existente com um novo repositório git
+Este exemplo pressupõe que você já tem uma pasta de projeto existente dentro da qual gostaria de criar o repositório. Você primeiro fará cd à pasta raiz do projeto e depois executará o comando git init.
+
+cd /path/to/your/existing/code 
+git init
+Apontar git init a um diretório de projeto existente executará a mesma configuração de inicialização mencionada acima, mas com escopo para este diretório de projeto.
+
+git init <project directory>
+Visite a página git initpara obter recursos mais detalhados sobre git init.
+
+Clonando um repositório existente: git clone
+Se um projeto já foi configurado em um repositório central, o comando clonar é a forma mais comum para os usuários obterem um clone de desenvolvimento local. Como o git init, a clonagem é geralmente uma operação única. Depois que um desenvolvedor obtiver uma cópia ativa, todas as operações de controle de versão serão gerenciadas pelo seu repositório local.
+
+git clone <repo url>
+git clone é usado para criar uma cópia ou clone de repositórios remotos. Você transmite o git cline em uma URL de repositório. O Git é compatível com alguns protocolos de rede diferentes e formatos correspondentes de URL. Neste exemplo, usaremos o protocolo SSH de Git. As URLs do SSH de Git seguem um modelo de:git@HOSTNAME:USERNAME/REPONAME.git
+
+Um exemplo de URL de SHH de Git seria: git@bitbucket.org:rhyolight/javascript-data-store.git em que os valores de modelo são correspondentes:
+
+HOSTNAME: bitbucket.org
+USERNAME: rhyolight
+REPONAME: javascript-data-store
+Quando executada, a versão mais recente dos arquivos do repositório remoto na ramificação principal vai ser transferida e adicionada a uma nova pasta. A nova pasta vai ser nomeada de acordo com o REPONAME, neste caso, javascript-data-store. A pasta vai conter o histórico completo do repositório remoto e a ramificação principal recém-criada.
+
+Para obter mais documentos sobre o uso de git clone e formatos de URL de Git suportados, visite a Página git clone.
+
+Salvando alterações no repositório: git add e git commit
+Agora que você possui um repositório clonado ou inicializado, é possível fazer commit em alterações de versão do arquivo nele. O exemplo seguinte pressupõe que você configurou um projeto em /path/to/project. Os passos a serem realizados neste exemplo são:
+
+Altere os diretórios para /path/to/project
+Criar um novo arquivo CommitTest.txt com o conteúdo ~"conteúdo de teste para o tutorial do Gitl"~
+Fazer git add CommitTest.txt na área de preparação de repositório
+Criar um novo commit com uma mensagem descrevendo o trabalho que foi feito no commit
+cd /path/to/project 
+echo "test content for git tutorial" >> CommitTest.txt 
+git add CommitTest.txt 
+git commit -m "added CommitTest.txt to the repo"
+Depois de executar este exemplo, seu repositório agora terá CommitTest.txt adicionado ao histórico e rastreará atualizações futuras do arquivo.
+
+Este exemplo introduziu dois comandos git adicionais: add e commit. Este foi um exemplo bem limitado, mas os dois comandos são abordados de modo mais detalhado nas páginas git add e git commit. Outro caso de uso comum do git add é a opção --all. Executar git add -all pegará quaisquer arquivos alterados e não monitorados no repositório e os adicionará ao repositório e atualizará a árvore de trabalho do repositório.
+
+Colaboração de repositório para repositório: git push
+É importante entender que a ideia do Git de uma "cópia ativa" é muito diferente da cópia ativa que você obtém realizando check out do código-fonte de um repositório SVN. Ao contrário do SVN, o Git não faz distinção entre as cópias ativas e o repositório central—são todos repositórios Git totalmente desenvolvidos.
+
+Isto torna a colaboração com o Git fundamentalmente diferente da colaboração do SVN. Enquanto o SVN depende do relacionamento entre o repositório central e a cópia ativa, o modelo de colaboração do Git é baseado na interação de repositório para repositório. Em vez de confirmar uma cópia ativa no repositório central do SVN, você envia ou puxa commits de um repositório a outro.
+
+Claro que nada impede que você dê um significado especial a determinados repositórios Git. Por exemplo, ao simplesmente designar um repositório Git como o repositório "central", é possível replicar um fluxo de trabalho centralizado usando o Git. Isto é realizado por convenções, em vez de ser ligado ao próprio VCS.
+
+Repositórios vazios versus clonados
+Se você utilizou git clone na seção anterior "Inicializando um novo repositório" para configurar seu repositório local, seu repositório já está configurado para colaboração remota. git clone configurará automaticamente seu repositório com um remoto apontado para a URL de git da qual você o clonou. Isso significa que depois de fazer alterações no arquivo e fazer commit nele, você pode usar git push nessas alterações para o repositório remoto.
+
+Se você utilizou git init para fazer um repositório atualizado, você não terá um repositório remoto para colocar mudanças. Um padrão comum ao inicializar um novo repositório é ir para um serviço Git hospedado, como o Bitbucket, e criar um repositório lá. O serviço fornecerá uma URL de Git que você poderá adicionar ao seu repositório Git local e usar git push para o repositório hospedado. Depois de ter criado um repositório remoto com o serviço de sua escolha, você precisará atualizar seu repositório local com um mapeamento. Nós discutiremos o processo no guia Configuração e definição abaixo.
+
+Se você preferir hospedar seu próprio repositório remoto, precisará configurar um "Repositório vazio". Tanto git init quanto git clone aceitam um argumento --bare. O caso de uso mais comum para um repositório vazio é criar um repositório Git central remoto.
+
+Configuração e definição: git config
+Depois de estabelecer uma configuração de repositório remoto, você precisará adicionar uma url de repositório remoto à sua git config local e definir uma ramificação upstream para as suas ramificações locais. O comando git remote oferece tal utilidade.
+
+git remote add <remote_name> <remote_repo_url>
+Este comando mapeará o repositório remoto em  em uma referência em seu repositório local sob . Depois de ter mapeado o repositório remoto, você pode colocar ramificações locais nele.
+
+git push -u <remote_name> <local_branch_name>
+Este comando vai colocar a ramificação do repositório local sob < local_branch_name > no repositório remoto em < remote_name >.
+
+Para obter mais detalhes sobre o git remote, consulte a Página Git remote.
+
+Além de configurar a URL de repositório remoto, você também pode precisar configurar opções de configuração global do Git, como nome de usuário ou e-mail. O comando git config permite que você configure sua instalação Git (ou um repositório individual) da linha de comandos. Este comando pode definir tudo, desde informações do usuário, preferências, até o comportamento de um repositório. Várias opções comuns de configuração estão listadas abaixo.
+
+O Git armazena as opções de configuração em três arquivos separados, o que permite que você estenda as opções a repositórios individuais (local), usuário (Global) ou o sistema inteiro (sistema):
+
+Local: /.git/config – Configurações específicas dos repositórios.
+Global: /.gitconfig – Configurações específicas do usuário. É aqui que as opções definidas com o sinalizador --global são armazenadas.
+Sistema:$(prefix)/etc/gitconfig – Configurações de todo o sistema.
+Defina o nome do autor a ser usado para todas as confirmações no repositório atual. Em geral, o marcador usado para definir opções de configuração para o usuário atual é o --global.
+
+git config --global user.name <name>
+Defina o nome do autor a ser usado para todas as confirmações pelo usuário atual.
+
+Adicionar a opção --local ou não passar as opções de nível de configuração, definirá o user.name para o repositório local atual.
+
+git config --local user.email <email>
+Defina o e-mail do autor a ser usado para todas as confirmações pelo usuário atual.
+
+git config --global alias.<alias-name> <git-command>
+Crie um atalho para um comando do Git. Este é um utilitário poderoso para criar atalhos personalizados para comandos git comumente utilizados. Um exemplo simplista seria:
+
+git config --global alias.ci commit
+Isso cria um comando ci que você pode executar como atalho para o git commit. Para saber mais sobre os aliases do git, visite a página do git config.
+
+git config --system core.editor <editor>
+Defina o editor de texto usado por comandos como git commit para todos os usuários da máquina atual. O argumento  deve ser o comando que lança o editor desejado (por exemplo, vi). Este exemplo introduz a opção --system. A opção --system definirá a configuração do sistema todo, o que significa todos os usuários e repositórios em uma máquina. Para obter informações mais detalhadas sobre os níveis de configuração, viste a página git config.
+
+git config --global --edit
+Abra o arquivo de configuração global em um editor de texto para a edição manual. Um guia mais detalhado sobre como configurar um editor de texto para uso no git pode ser encontrado na página Git config.
+
+Discussão
+Todas as opções de configuração são armazenadas em arquivos de texto sem formatação, então o comando git config é realmente apenas uma interface conveniente da linha de comandos. Normalmente, você só precisará configurar uma instalação do Git da primeira vez que você começar a trabalhar em uma nova máquina de desenvolvimento, e para todos os casos praticamente, você preferirá usar o sinalizador --global. Uma exceção importante é sobrescrever o endereço de e-mail do autor. Você pode desejar colocar seu endereço de e-mail pessoal para repositórios pessoais e de código aberto, e seu endereço de e-mail profissional para repositórios relacionados ao trabalho.
+
+O Git armazena as opções de configuração em três arquivos separados, o que permite que você estenda as opções a repositórios individuais, usuários ou todo o sistema:
+
+/.git/config – Configurações específicas dos repositórios.
+~/.gitconfig -– Configurações específicas do usuário. É aqui que as opções definidas com o sinalizador --global são armazenadas.
+$(prefix)/etc/gitconfig – Configurações de todo o sistema.
+Quando as opções nesses arquivos são conflitantes, as configurações locais substituem as configurações do usuário, o que substitui todo o sistema. Se abrir qualquer um desses arquivos, você vai ver algo parecido com o seguinte:
+
+[user] name = John Smith email = john@example.com [alias] st = status co = checkout br = branch up = rebase ci = commit [core] editor = vim
+É possível fazer a edição manual desses valores para obter o efeito exato do git config.
+
+Exemplo
+A primeira coisa a fazer após instalar o Git é informar seu nome/e-mail e personalizar algumas das configurações padrão. Uma configuração inicial típica pode se parecer com o seguinte:
+
+Diga ao Git quem é você git config
+
+git --global user.name "John Smith" git config --global user.email john@example.com
+Selecione seu editor de texto preferido
+
+git config --global core.editor vim
+Adicione alguns aliases como o SVN
+
+git config --global alias.st status 
+git config --global alias.co checkout 
+git config --global alias.br branch 
+git config --global alias.up rebase 
+git config --global alias.ci commit
+Isto produzirá o arquivo ~ /.gitconfig da seção anterior. Dê uma olhada mais detalhada no git config na página git config.
+
+Resumo
+Aqui a gente demonstrou como criar um repositório do Git usando dois métodos: git init e git clone. Este guia pode ser aplicado para gerenciar o código-fonte do software ou outros conteúdos que precisarem de diferentes versões. Git add, git commit, git push e git remote também foram apresentados, com demonstração de uso geral.
+
+Leia nosso guia para saber qual sistema de repositório de código é o melhor para sua equipe!
